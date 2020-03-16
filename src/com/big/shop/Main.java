@@ -12,7 +12,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Main entry class to th application. The main method will read shopping items and creates a list, calculates the prices according to the given requirements
+ * Main entry class to th application. The main method will read shopping items and creates a list, calculates the prices according to the given requirements.
+ * User will pass commandline arguments in double quotes. e.g. "SIM Card" "phone case" "phone insurance" "phone insurance" "wireless earphones" "wired earphones"
  ***/
 public class Main {
 

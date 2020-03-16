@@ -28,13 +28,16 @@ public class DiscountEligibleSalesTaxExemptProduct extends SalesTaxExemptProduct
     @Override
     public double getPriceWithDiscounts(TotalPrice totalPrice, StringBuilder receiptBuilder) {
 
-        double priceWithDiscounts = getPrice() * (1 - getDiscount() / 100d);
+        if(discount!=0) {
+            double priceWithDiscounts = getPrice() * (1 - getDiscount() / 100d);
 
-        totalPrice.setDiscount(totalPrice.getDiscount() + (getPrice() - priceWithDiscounts));
-        receiptBuilder.append(String.format("%-20s= %8.2f", "*discount : ", (-1 * (getPrice() - priceWithDiscounts))));
-        receiptBuilder.append("\n");
+            totalPrice.setDiscount(totalPrice.getDiscount() + (getPrice() - priceWithDiscounts));
+            receiptBuilder.append(String.format("%-20s= %8.2f", "*discount : ", (-1 * (getPrice() - priceWithDiscounts))));
+            receiptBuilder.append("\n");
 
-        return priceWithDiscounts;
+            return priceWithDiscounts;
+        }
+        return getPrice();
     }
 
 }

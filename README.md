@@ -21,6 +21,8 @@ No prior dependencies are required
 
 This project does not require a GUI or persistence layer. All the products will be stored in memory.
 
+User will pass commandline arguments in double quotes. e.g. "SIM Card" "phone case" "phone insurance" "phone insurance" "wireless earphones" "wired earphones" 
+
 ##Improvements
 
 Need to convert this project as SpringBoot and Rest application to fully operate as Rest service
