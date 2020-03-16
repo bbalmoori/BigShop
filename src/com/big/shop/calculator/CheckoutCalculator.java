@@ -21,6 +21,8 @@ public class CheckoutCalculator {
 
         products.stream().forEach(product -> product.calculatePrice(totalPrice, receiptBuilder));
 
+        receiptBuilder.append("----------------------------------");
+        receiptBuilder.append("\n");
         receiptBuilder.append("Total Items: " + products.size());
         receiptBuilder.append("\n");
         receiptBuilder.append("----------------------------------");

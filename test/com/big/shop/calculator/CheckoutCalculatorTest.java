@@ -46,7 +46,7 @@ public class CheckoutCalculatorTest {
         assertEquals("Total pay calculated is incorrect",22.40, totalPrice.getPrice(), DELTA);
     }
 
-    @Test
+   @Test
     public void testCalculateBasket_OnePhoneCase(){
         TotalPrice totalPrice = new TotalPrice();
         List<IProduct> products = Collections.singletonList(TestUtils.getPhoneCaseProduct());
@@ -169,6 +169,7 @@ public class CheckoutCalculatorTest {
                 "*Sales Tax Exempt\n" +
                 "WIRED_EARPHONES     =    30.00\n" +
                 "WIRELESS_EARPHONES  =    50.00\n" +
+                "----------------------------------\n" +
                 "Total Items: 5\n" +
                 "----------------------------------\n" +
                 "SUB-TOTAL           =   230.00\n" +

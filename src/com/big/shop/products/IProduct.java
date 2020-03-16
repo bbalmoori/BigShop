@@ -39,41 +39,23 @@ public interface IProduct {
     }
 
     /**
-     * Default implementation for calculating the price of a given product.
-     * The default discount while calculating is 0%. If any product is eligible for discount, then {@link #setDiscount(double)} must be called before calculating the price
-     * This method will use default sales tax, to change this behaviour subclasses must override {@link #getSalesTax()}
+     * calculates the price for a given product by applying discount (if any) and adding sales tax (if applicable)
      **/
-    default TotalPrice calculatePrice(TotalPrice totalPrice, StringBuilder receiptBuilder) {
-
-        totalPrice.setSubTotal(totalPrice.getSubTotal() + getPrice());
-
-        receiptBuilder.append(String.format("%-20s= %8.2f", getProductName(), getPrice()));
-        receiptBuilder.append("\n");
-
-        //Calculate discount
-        double priceWithDiscounts = getPriceWithDiscounts(totalPrice, receiptBuilder);
-
-        //calculate sales tax
-        double productSalesTax = getProductSalesTax(receiptBuilder, priceWithDiscounts);
-
-        totalPrice.setTax(totalPrice.getTax() + productSalesTax);
-        totalPrice.setPrice(totalPrice.getPrice() + (priceWithDiscounts + productSalesTax));
-
-        return totalPrice;
-    }
+    TotalPrice calculatePrice(TotalPrice totalPrice, StringBuilder receiptBuilder);
 
     /**
-     * Default method for discount calculation, this will return original price. Discounted products must implement this method to calculate discount
+     * Calculates discount for the given product
+     * @param @{@link TotalPrice} TotalPrice object to hold discount across all the products
+     * @param @{@link StringBuilder} builds receipt for a given shopping list
+     * @return Double
      **/
-    default double getPriceWithDiscounts(TotalPrice totalPrice, StringBuilder receiptBuilder) {
-       return getPrice();
-    }
+    double getPriceWithDiscounts(TotalPrice totalPrice, StringBuilder receiptBuilder);
 
     /**
-     * Default method to calculate sales tax, this will apply 12% sales tax.
-     * Any other sales tax, like exemption, lower or higher sales tax products must override this method.
+     * Calculates sales tax for the given product.
+     * @param @{@link StringBuilder} builds receipt for a given shopping list
+     * @param @{@link Double} price after discount
+     * @return Double sales tax
      **/
-    default double getProductSalesTax(StringBuilder receiptBuilder, double priceWithDiscounts) {
-        return  priceWithDiscounts * (getSalesTax() / 100d);
-    }
+    double getProductSalesTax(StringBuilder receiptBuilder, double priceWithDiscounts);
 }
