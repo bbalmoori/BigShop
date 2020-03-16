@@ -45,21 +45,13 @@ public interface IProduct {
      **/
     default TotalPrice calculatePrice(TotalPrice totalPrice, StringBuilder receiptBuilder) {
 
-        double priceWithDiscounts = getPrice();
-
         totalPrice.setSubTotal(totalPrice.getSubTotal() + getPrice());
 
         receiptBuilder.append(String.format("%-20s= %8.2f", getProductName(), getPrice()));
         receiptBuilder.append("\n");
 
         //Calculate discount
-        double discount = 0;
-        if (getDiscount() != 0) {
-            discount = (1 - getDiscount() / 100d);
-            priceWithDiscounts *= discount;
-            totalPrice.setDiscount(totalPrice.getDiscount() + (getPrice() - priceWithDiscounts));
-            printDiscountIfApplicable(receiptBuilder, priceWithDiscounts);
-        }
+        double priceWithDiscounts = getPriceWithDiscounts(totalPrice, receiptBuilder);
 
         //calculate sales tax
         double productSalesTax = getProductSalesTax(receiptBuilder, priceWithDiscounts);
@@ -70,22 +62,18 @@ public interface IProduct {
         return totalPrice;
     }
 
-    default double getProductSalesTax(StringBuilder receiptBuilder, double priceWithDiscounts) {
-        double productSalesTax = 0;
-
-        if (getSalesTax() != 0) {
-            productSalesTax = priceWithDiscounts * (getSalesTax() / 100d);
-        } else {
-            receiptBuilder.append("*Sales Tax Exempt");
-            receiptBuilder.append("\n");
-        }
-        return productSalesTax;
+    /**
+     * Default method for discount calculation, this will return original price. Discounted products must implement this method to calculate discount
+     **/
+    default double getPriceWithDiscounts(TotalPrice totalPrice, StringBuilder receiptBuilder) {
+       return getPrice();
     }
 
-    default void printDiscountIfApplicable(StringBuilder receiptBuilder, double priceWithDiscounts) {
-
-            receiptBuilder.append(String.format("%-20s= %8.2f", "*discount : ", (-1 * (getPrice() - priceWithDiscounts))));
-            receiptBuilder.append("\n");
-
+    /**
+     * Default method to calculate sales tax, this will apply 12% sales tax.
+     * Any other sales tax, like exemption, lower or higher sales tax products must override this method.
+     **/
+    default double getProductSalesTax(StringBuilder receiptBuilder, double priceWithDiscounts) {
+        return  priceWithDiscounts * (getSalesTax() / 100d);
     }
 }

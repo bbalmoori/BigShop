@@ -18,6 +18,7 @@ public class ProductFactory {
 
     private static final DiscountEligibleSalesTaxExemptProduct PHONE_INSURANCE_PRODUCT = new DiscountEligibleSalesTaxExemptProduct(120, ProductName.PHONE_INSURANCE);
 
+    //Ideally these should come from Database.
     static {
         availableProducts.put(ProductName.SIM_CARD, new BuyOneGetOneProduct(20, ProductName.SIM_CARD));
         availableProducts.put(ProductName.PHONE_CASE, new Product(10, ProductName.PHONE_CASE));
@@ -31,7 +32,7 @@ public class ProductFactory {
     /**
      * returns all available products in Big Shop application
      * @return
-     * returns Map of available products @{@link Map<ProductName , IProduct>}
+     * returns Map of available products @{@link Map<ProductName, IProduct>}
      * **/
     public static Map<ProductName, IProduct> getAvailableProducts() {
         return availableProducts;

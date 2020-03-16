@@ -17,4 +17,10 @@ public class SalesTaxExemptProduct extends Product {
         return 0;
     }
 
+    public double getProductSalesTax(StringBuilder receiptBuilder, double priceWithDiscounts) {
+        receiptBuilder.append("*Sales Tax Exempt");
+        receiptBuilder.append("\n");
+        return 0;
+    }
+
 }
